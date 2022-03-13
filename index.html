@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix</title>
+    <style>
+
+        body{
+            background: rgb(54, 54, 54);
+        }
+
+        input{
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            background: black;
+            color: white;
+            border: none;
+            margin-left: 100px;
+        }
+
+        button{
+            padding: 15px;
+            font-size: 18px;
+            background: rgb(0, 114, 207);
+            border-radius: 10px;
+            color: white;
+
+            transition: background .3s ease-in-out;
+        }
+        button:hover{
+            background: rgb(0, 103, 187);
+            cursor: pointer;
+        }
+
+        #container {
+            /* display: grid;
+            grid-template-columns: repeat(5,50px);
+            grid-template-rows: repeat(5,50px); */
+
+            position: relative;
+            width: 90%;
+            height: 90%;
+          
+        }
+
+        #container  div {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            background: rgba(255, 255, 255, 0.623);
+
+            width: 44px;
+            height: 44px;
+            margin: 5px;
+
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <input type="number" name="" id="inner_value" placeholder="Type a number">
+    <button id="start">Matrix</button>
+
+    <div id="container">
+
+
+
+
+    </div>
+
+
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+
+
+        let inp_value = "", sqr = 0;
+
+        let row = 1,
+            posX = 100,
+            posY = 100,
+            iter = 1,
+            iter_total = 0,
+            koeff = 0,
+            iter_change = 0;
+
+
+
+
+
+        $("#start").click(function () {
+
+            inp_value = +$("#inner_value").val();
+
+
+
+            sqr = Math.sqrt(inp_value);
+            sqr = Math.round(sqr);
+
+            inp_value = sqr * sqr;
+
+            iter_total = ((sqr - 1) * 2) + 1;
+
+            koeff = sqr;
+
+            iter = 1;
+            posX = 100;
+            posY = 100;
+
+            $("#container").html("");
+
+            for (let i = 1; i <= inp_value; i++) {
+
+
+                if (iter % 4 == 1 && iter <= iter_total) {
+                    posX = posX + 50;
+
+                } else if (iter % 4 == 2 && iter <= iter_total) {
+
+                    posY = posY + 50;
+
+                } else if (iter % 4 == 3 && iter <= iter_total) {
+                    posX = posX - 50;
+                } else if (iter % 4 == 0 && iter <= iter_total) {
+                    posY = posY - 50;
+                    iter = 0;
+                }
+
+
+                if (i == koeff || i == (iter_change + koeff)) {
+                    if (iter % 2 == 1) {
+                        koeff--;
+                    }
+                    iter++;
+                    iter_change = i;
+
+                }
+
+
+
+                $("#container").html($("#container").html() + "<div class='" + i + "' style='top:" + posY + "px;left:" + posX + "px; opacity:0'  >" + i + "</div>");
+
+
+
+            }
+
+            let k = 1;
+            let timer = setInterval(function () {
+
+                $("." + k).animate({ opacity: "1" }, 500);
+                k++;
+
+                if (k == (inp_value + 1)) clearInterval(timer);
+            }, 200)
+
+
+        })
+
+
+
+    </script>
+
+</body>
+
+</html>
